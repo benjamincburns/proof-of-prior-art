@@ -2,40 +2,60 @@ import React, { Component } from 'react';
 import { drizzleConnect } from 'drizzle-react';
 import PropTypes from 'prop-types'
 
+import { mintToken } from '../../Actions/mint';
+
+import './main.css'
+
+
+const pendingStatus = "🤔 Hmm, let me check on that...";
+const alreadyClaimedStatus = "😦 Looks like someone else claimed this hash already!";
+const mintedStatus = "🤩 You're officially an inventor!";
+
 class Main extends Component {
   constructor(props, context) {
     super(props)
     
     this.contracts = context.drizzle.contracts
+    this.state = {
+      pending: false,
+      statusLine: ""
+    }
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    let textArea = document.getElementById('priorArt');
+    this.props.dispatch(mintToken(priorArt.value));
+  }
+
+  renderStatusLine() {
+    if (this.state.statusLine == "") {
+      return null;
+    }
+    return <span>{ this.state.statusLine }</span>;
+  }
+
+  renderSubmitButton() {
+    if (this.state.pending) {
+      return (<span id="spinner">🧐</span>);
+    } else {
+      return (<input type="submit" value="Submit" />);
+    }
   }
 
   render() {
-    // Get the initial argsHash for this call.
-    const totalSupplyKey = this.contracts.PriorArtToken.methods.totalSupply.cacheCall()
-
-    // If the key we received earlier isn't in the store yet; the initial value is still being fetched.
-    if(!(totalSupplyKey in this.props.PriorArtToken.totalSupply)) {
-      return (
-        <div>
-          <p>Fetching...</p>
-        </div>
-      )
-    }
-    
-    // The value is fetched, let's check the balance and use it!
-    if (this.props.PriorArtToken.totalSupply[totalSupplyKey] === 0) {
-      return (
-        <div>
-          <p>👨‍🌾 Looks like you ain't got no tokens!</p>
-        </div>
-      )
-    } else {
-      return (
-        <div>
-          🖼️ Our contract contains <strong>{ this.props.PriorArtToken.totalSupply[totalSupplyKey].value }</strong> pieces of art.
-        </div>
-      )
-    }
+    return (
+      <form onSubmit={this.handleSubmit} id="MainContainer">
+        <h1> Prior Art 🎨</h1>
+        <label>
+          Enter some text to claim your original idea!
+          <textarea id="priorArt" />
+        </label>
+        { this.renderStatusLine() }
+        { this.renderSubmitButton() }
+      </form>
+    );
   }
 }
 

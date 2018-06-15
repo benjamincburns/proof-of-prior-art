@@ -1,0 +1,87 @@
+@import url('https://fonts.googleapis.com/css?family=Fira+Sans|Lobster+Two|Roboto+Condensed');
+
+/* colors */
+:root {
+  --text-color: #fff;
+  --app-background-color: #34262a;
+
+
+  --app-button-primary-background-color: rgba(78, 60, 65, 1.000);
+  --app-button-primary-color: rgba(242, 175, 103, 1.000);
+  --app-button-primary-disabled-border-color: rgba(227, 227, 227, 1.000);
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+a {
+  cursor: pointer;
+  text-decoration: none;
+  text-shadow: 1px 1px 1px rgba(0,0,0,.004);
+  -webkit-font-smoothing: antialiased;
+}
+
+html,
+body {
+  padding: 0;
+
+  background-color: var(--app-background-color);
+
+  font-family: "Fira Sans", sans-serif;
+  font-weight: 200;
+  color: var(--text-color);
+}
+
+html,
+body,
+#root {
+  height: 100vh;
+  width: 100vw;
+}
+
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
+input[type="text"],
+button,
+textarea { 
+	-webkit-app-region: no-drag;
+}
+
+input[type=submit],
+button,
+.Button {
+  margin: 0;
+  padding: 0;
+  resize: none;
+  border: 0;
+  outline: 0;
+  background-color: var(--app-button-primary-color);
+  height: 32px;
+  padding: 0 20px;
+  cursor: pointer;
+  white-space: nowrap;
+  text-transform: uppercase;
+  color: var(--app-button-primary-background-color);
+  border-radius: 3px;
+  font-family: "Roboto Condensed";
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 32px;
+  transition: all .3s;
+
+  &[disabled] {
+    background-color: transparent;
+    color: #888;
+    border: 1px solid #888;
+    cursor: not-allowed;
+  }
+
+  &:hover {
+    opacity: 0.9;
+    box-shadow: 0;
+  }
+}
