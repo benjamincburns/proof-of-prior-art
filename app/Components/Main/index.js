@@ -8,7 +8,7 @@ import './main.css'
 
 
 const pendingStatus = "🤔 Hmm, let me check on that...";
-const alreadyClaimedStatus = "😦 Looks like someone else claimed this hash already!";
+const failureStatus = "😦 Looks like someone else claimed this hash already!";
 const mintedStatus = "🤩 You're officially an inventor!";
 
 class Main extends Component {
@@ -16,10 +16,6 @@ class Main extends Component {
     super(props)
     
     this.contracts = context.drizzle.contracts
-    this.state = {
-      pending: false,
-      statusLine: ""
-    }
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -30,14 +26,21 @@ class Main extends Component {
   }
 
   renderStatusLine() {
-    if (this.state.statusLine == "") {
-      return null;
+    let statusLine = '';
+
+    if (this.props.mint.mintTokenStatus === 'success') {
+      return <span>{ mintedStatus }</span>
+    } else if (this.props.mintTokenStatus === 'pending') {
+      return <span>{ pendingStatus }</span>
+    } else if (this.props.mint.tokenExists) {
+      return <span>{ failureStatus }</span>
     }
-    return <span>{ this.state.statusLine }</span>;
+
+    return null;
   }
 
   renderSubmitButton() {
-    if (this.state.pending) {
+    if (this.props.mint.mintTokenStatus === 'pending') {
       return (<span id="spinner">🧐</span>);
     } else {
       return (<input type="submit" value="Submit" />);
@@ -67,7 +70,8 @@ const mapStateToProps = state => {
   return {
     accounts: state.accounts,
     drizzleStatus: state.drizzleStatus,
-    PriorArtToken: state.contracts.PriorArtToken
+    PriorArtToken: state.contracts.PriorArtToken,
+    mint: state.mint
   };
 };
 

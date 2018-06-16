@@ -4,7 +4,6 @@ const drizzleOptions = {
   contracts: [
     PriorArtToken
   ],
-  syncalways: true,
   web3: {
     fallback: {
       type: 'ws',

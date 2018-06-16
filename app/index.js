@@ -7,7 +7,7 @@ import thunkMiddleware from 'redux-thunk';
 import { Drizzle, generateContractsInitialState } from 'drizzle';
 import { DrizzleProvider, drizzleConnect } from 'drizzle-react';
 import { LoadingContainer } from 'drizzle-react-components';
-import DrizzleSagaConnector from './drizzleSagaConnector';
+import DrizzleSagaConnector from './Components/drizzleSagaConnector';
 
 import drizzleOptions from './drizzleOptions';
 import rootReducer from './Reducers/root';

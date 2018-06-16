@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
-import { routerReducer } from 'react-router-redux';
 import { drizzleReducers } from 'drizzle';
+import mintReducer from './mint';
 
 const reducer = combineReducers({
-  routing: routerReducer,
+  mint: mintReducer,
   ...drizzleReducers
 });
 
